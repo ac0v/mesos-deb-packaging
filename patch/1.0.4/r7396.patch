@@ -1,0 +1,17 @@
+--- a/src/linux/fs.cpp	2021-07-06 13:57:33.810760137 +0000
++++ b/src/linux/fs.cpp	2021-07-07 10:43:31.306864904 +0000
+@@ -21,6 +21,14 @@
+ #include <linux/limits.h>
+ #include <linux/unistd.h>
+ 
++// This header include must be enclosed in an `extern "C"` block to
++// workaround a bug in glibc <= 2.12 (see MESOS-7378).
++//
++// TODO(neilc): Remove this when we no longer support glibc <= 2.12.
++extern "C" {
++#include <sys/sysmacros.h>
++}
++
+ #include <list>
+ #include <set>
+ #include <utility>

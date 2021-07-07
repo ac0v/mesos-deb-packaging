@@ -160,6 +160,18 @@ function checkout {
   else msg "Cloning: $repository at $ref" && git clone "$repository" "$src_dir"
   fi
   ( cd "$src_dir" && ( [[ ! ${ref:-} ]] || git checkout -f "$ref" ) && "$@" )
+
+  local version=( $(mesos_version) )
+  if [[ -d "patch/$version" ]]; then
+      for p in patch/$version/*.patch; do
+        local b=$(basename "$p")
+        if [[ -e "$src_dir/3rdparty/$b" ]]; then
+          cp $p "$src_dir/3rdparty/$b"
+        else
+          ( cd "$src_dir" && patch -p1 < ../$p )
+        fi
+      done
+  fi
 }
 
 function build {(

@@ -1,0 +1,17 @@
+--- a/src/slave/containerizer/mesos/isolators/gpu/isolator.cpp	2021-07-06 12:54:02.171926942 +0000
++++ b/src/slave/containerizer/mesos/isolators/gpu/isolator.cpp	2021-07-07 10:55:52.931931780 +0000
+@@ -46,6 +46,14 @@
+ #include "slave/containerizer/mesos/isolators/gpu/isolator.hpp"
+ #include "slave/containerizer/mesos/isolators/gpu/nvml.hpp"
+ 
++// This header include must be enclosed in an `extern "C"` block to
++// workaround a bug in glibc <= 2.12 (see MESOS-7378).
++//
++// TODO(neilc): Remove this when we no longer support glibc <= 2.12.
++extern "C" {
++#include <sys/sysmacros.h>
++}
++
+ using cgroups::devices::Entry;
+ 
+ using docker::spec::v1::ImageManifest;
