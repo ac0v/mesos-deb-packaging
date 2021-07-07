@@ -301,10 +301,6 @@ function init_scripts {
       mkdir -p lib/systemd/system
       cp "$this"/systemd/master.systemd lib/systemd/system/mesos-master.service
       cp "$this"/systemd/slave.systemd lib/systemd/system/mesos-slave.service ;;
-    debian/*)
-      mkdir -p etc/init.d
-      cp -p "$this"/init/master.init etc/init.d/mesos-master
-      cp -p "$this"/init/slave.init etc/init.d/mesos-slave ;;
     ubuntu/*|redhat/6|redhat/6.*|centos/6|centos/6.*)
       mkdir -p etc/init
       cp "$this"/upstart/master.upstart etc/init/mesos-master.conf
